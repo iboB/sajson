@@ -3,6 +3,8 @@
 /build/
 /.vscode/
 /swift/sajson.xcodeproj/project.xcworkspace/xcshareddata/
+/.vs/
+/out/
 
 # Bazel
 MODULE.bazel.lock
