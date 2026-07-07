@@ -371,6 +371,32 @@ SUITE(doubles) {
         CHECK_EQUAL(10e22, e2.get_double_value());
     }
 
+    ABSTRACT_TEST(exponent_limits) {
+        const sajson::document& document
+            = parse(literal("[1e-323,1.2e308,1e-324,1e309]"));
+        assert(success(document));
+
+        const value& root = document.get_root();
+        CHECK_EQUAL(TYPE_ARRAY, root.get_type());
+        CHECK_EQUAL(4u, root.get_length());
+
+        const value& e0 = root.get_array_element(0);
+        CHECK_EQUAL(TYPE_DOUBLE, e0.get_type());
+        CHECK_EQUAL(1e-323, e0.get_double_value());
+
+        const value& e1 = root.get_array_element(1);
+        CHECK_EQUAL(TYPE_DOUBLE, e1.get_type());
+        CHECK_EQUAL(1.2e308, e1.get_double_value());
+
+        const value& e2 = root.get_array_element(2);
+        CHECK_EQUAL(TYPE_DOUBLE, e2.get_type());
+        CHECK_EQUAL(0, e2.get_double_value());
+
+        const value& e3 = root.get_array_element(3);
+        CHECK_EQUAL(TYPE_DOUBLE, e3.get_type());
+        CHECK_EQUAL(INFINITY, e3.get_double_value());
+    }
+
     ABSTRACT_TEST(long_no_exponent) {
         const sajson::document& document
             = parse(literal("[9999999999,99999999999]"));
