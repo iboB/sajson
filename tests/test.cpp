@@ -315,11 +315,11 @@ ABSTRACT_TEST(unit_types) {
 
 SUITE(doubles) {
     ABSTRACT_TEST(doubles) {
-        const sajson::document& document = parse(literal("[-0,-1,-34.25]"));
+        const sajson::document& document = parse(literal("[-0,-1,-34.25,1.65,0.3,3.141592]"));
         assert(success(document));
         const value& root = document.get_root();
         CHECK_EQUAL(TYPE_ARRAY, root.get_type());
-        CHECK_EQUAL(3u, root.get_length());
+        CHECK_EQUAL(6u, root.get_length());
 
         const value& e0 = root.get_array_element(0);
         CHECK_EQUAL(TYPE_INTEGER, e0.get_type());
@@ -332,6 +332,18 @@ SUITE(doubles) {
         const value& e2 = root.get_array_element(2);
         CHECK_EQUAL(TYPE_DOUBLE, e2.get_type());
         CHECK_EQUAL(-34.25, e2.get_double_value());
+
+        const value& e3 = root.get_array_element(3);
+        CHECK_EQUAL(TYPE_DOUBLE, e3.get_type());
+        CHECK_EQUAL(1.65, e3.get_double_value());
+
+        const value& e4 = root.get_array_element(4);
+        CHECK_EQUAL(TYPE_DOUBLE, e4.get_type());
+        CHECK_EQUAL(0.3, e4.get_double_value());
+
+        const value& e5 = root.get_array_element(5);
+        CHECK_EQUAL(TYPE_DOUBLE, e5.get_type());
+        CHECK_EQUAL(3.141592, e5.get_double_value());
     }
 
     ABSTRACT_TEST(large_number) {
